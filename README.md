@@ -1,36 +1,192 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Agent: Hotel Data Scraping, Content Generation & Auto-Publishing
 
-## Getting Started
+An intelligent AI agent built with Next.js that automates the entire content pipeline for hotel and travel content. This agent scrapes hotel data from public travel sources, analyzes and generates engaging blog content using AI, and automatically publishes and shares content to social media platforms on a scheduled basis.
 
-First, run the development server:
+## 🎯 Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This project implements **Track B: AI Agent (Scraping, Content Gen & Auto-Publish)** — a fully automated content generation and publishing system that leverages AI-powered scraping, content analysis, and social media automation.
+
+### Core Capabilities
+
+1. **Intelligent Hotel Data Scraping**
+   - Scrapes hotel information from travel platforms (Expedia, Kayak, search engines, public databases)
+   - Extracts key data points: pricing, amenities, reviews, location, photos
+   - Uses tools like parse.bot and firecrawl for robust data extraction
+
+2. **AI-Powered Content Generation**
+   - Analyzes scraped hotel data to generate complete blog posts
+   - Creates engaging copywriting with SEO optimization
+   - Generates visual image prompts and assets for content enhancement
+   - Powered by LLM integration (Ollama, OpenRouter, LangChain)
+
+3. **Automated Publishing & Social Media Sharing**
+   - Scheduled publishing every 2 hours to social media platforms
+   - Multi-platform support (minimum 1 platform required)
+   - Automated content formatting and optimization per platform
+   - Integration with publishing APIs and social media tools
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐
+│   Scheduler     │  (Cron jobs / Queue system)
+│  (Every 2hrs)   │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐      ┌──────────────────┐
+│  Data Scraper   │─────▶│  Hotel Database  │
+│ (parse.bot/     │      │  (PostgreSQL/    │
+│  firecrawl)     │      │   MongoDB)       │
+└─────────────────┘      └────────┬─────────┘
+                                   │
+                                   ▼
+                          ┌──────────────────┐
+                          │ Content Analyzer │
+                          │   (LangChain/    │
+                          │    LLM API)      │
+                          └────────┬─────────┘
+                                   │
+                                   ▼
+                          ┌──────────────────┐
+                          │ Content Generator│
+                          │ (Blog Posts,     │
+                          │  Images, SEO)    │
+                          └────────┬─────────┘
+                                   │
+                                   ▼
+                          ┌──────────────────┐
+                          │ Auto-Publisher   │
+                          │ (Social Media    │
+                          │  APIs)           │
+                          └──────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technology Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
+- **Next.js 15** — React framework with App Router
+- **TypeScript** — Type-safe development
+- **Tailwind CSS** — Modern UI styling
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### AI & Data Processing
+- **LangChain** — LLM orchestration and chains
+- **Ollama / OpenRouter** — Local and cloud LLM providers
+- **parse.bot / firecrawl** — Web scraping and data extraction
+- **smithery** — Tool and agent orchestration
 
-## Learn More
+### Database & Storage
+- **PostgreSQL / MongoDB** — Hotel data persistence
+- **File storage** — Generated content and assets
 
-To learn more about Next.js, take a look at the following resources:
+### Automation & Publishing
+- **Node-cron / Bull Queue** — Scheduled task execution
+- **Social Media APIs** — Platform-specific publishing
+- **rube.app** — Workflow automation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Clone the repository
+git clone <repository-url>
+cd ai_agent_scrapping
 
-## Deploy on Vercel
+# Install dependencies
+pnpm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Set up environment variables
+cp .env.example .env.local
+# Configure your API keys for LLM providers, scraping tools, and social media
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run database migrations (if applicable)
+pnpm db:migrate
+
+# Start development server
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
+
+## 🚀 Usage
+
+### Manual Trigger
+Access the dashboard to manually trigger scraping and content generation for testing.
+
+### Automated Pipeline
+The scheduler runs automatically every 2 hours:
+- Scrapes new hotel data from configured sources
+- Analyzes data and generates content
+- Publishes to configured social media platforms
+
+### Configuration
+Edit `config/sources.ts` to customize:
+- Scraping sources and frequency
+- Content generation parameters
+- Social media platforms and posting schedule
+
+## 📊 Deliverables
+
+- ✅ **Code Repository** — Full source code with documentation
+- ✅ **Deployed Web App** — Live dashboard and monitoring interface
+- ✅ **Social Media Posts** — Automated publishing with live post links
+- ✅ **AI Coding Agent Logs** — Complete development process documentation
+
+## 🔧 Development
+
+```bash
+# Run development server with hot reload
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Lint and type-check
+pnpm lint
+pnpm type-check
+
+# Build for production
+pnpm build
+```
+
+## 📝 Environment Variables
+
+Create a `.env.local` file:
+
+```env
+# LLM Configuration
+OPENROUTER_API_KEY=your_key
+OLLAMA_BASE_URL=http://localhost:11434
+
+# Scraping Tools
+FIRECRAWL_API_KEY=your_key
+PARSE_BOT_API_KEY=your_key
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/hoteldb
+
+# Social Media APIs
+TWITTER_API_KEY=your_key
+TWITTER_API_SECRET=your_secret
+FACEBOOK_PAGE_TOKEN=your_token
+
+# Scheduler
+CRON_SCHEDULE=0 */2 * * *
+```
+
+## 🤝 Contributing
+
+This is a hackathon project. Contributions and feedback are welcome!
+
+## 📄 License
+
+MIT License
+
+## 🎓 Hackathon Track
+
+**Track B: AI Agent (Scraping, Content Gen & Auto-Publish)**
+
+Built with AI vibe coding and spec-driven development methodologies.
+
+---
+
+**Keywords:** parse.bot, firecrawl, langchain, ollama, openrouter, rube.app, smithery
