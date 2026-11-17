@@ -15,6 +15,26 @@ const statusConfig = {
     label: "Pending",
     className: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
   },
+  published: {
+    label: "Published",
+    className: "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+  },
+  scheduled: {
+    label: "Scheduled",
+    className: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  },
+  draft: {
+    label: "Draft",
+    className: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
+  },
+  active: {
+    label: "Active",
+    className: "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+  },
+  paused: {
+    label: "Paused",
+    className: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
+  },
 } as const;
 
 interface StatusBadgeProps {
